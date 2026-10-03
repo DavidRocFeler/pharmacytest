@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Accedi · Rosa Farma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+<style>
+/* Hallmark · macrostructure: Workbench-lite (left-biased type + bare form, no card) · custom tuned theme
+ * theme: Rosa · paper cream · ink near-black · accent magenta ~8% · enrichment: Tier A CSS cross
+ * nav: edge-aligned minimal · footer: none (single screen)
+ * pre-emit critique: P4 H5 E4 S4 R5 V4
+ */
+:root{
+  --color-paper:#F7F6F1;
+  --color-ink:#0A0A0A;
+  --color-accent:#FF1A8C;
+  --color-on-accent:#0A0A0A;
+  --color-line:color-mix(in srgb,var(--color-ink) 22%,transparent);
+  --color-ink-soft:color-mix(in srgb,var(--color-ink) 68%,var(--color-paper));
+  --font-display:"Clash Display","Archivo",system-ui,sans-serif;
+  --font-body:"Satoshi","Plus Jakarta Sans",system-ui,sans-serif;
+  --gutter:clamp(1.25rem,5vw,3.5rem);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--color-paper:#0A0A0A;--color-ink:#F7F6F1}
+}
+:root[data-theme="dark"]{--color-paper:#0A0A0A;--color-ink:#F7F6F1}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;overflow-x:clip;margin:0}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--color-paper);color:var(--color-ink);font-family:var(--font-body);font-size:1rem;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.page{position:relative;overflow:clip;min-height:100%;display:grid;grid-template-rows:auto 1fr;padding:0 var(--gutter)}
+.cross{position:absolute;z-index:0;pointer-events:none;aspect-ratio:1;width:clamp(9rem,40vw,26rem);right:-14%;top:3.5rem;
+  background:linear-gradient(var(--color-accent),var(--color-accent)) 50% 50%/34% 100% no-repeat,
+             linear-gradient(var(--color-accent),var(--color-accent)) 50% 50%/100% 34% no-repeat}
+header,main{position:relative;z-index:1}
+header{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--font-display);font-weight:700;font-size:1.25rem;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
+.mark{width:1.2rem;aspect-ratio:1;background:linear-gradient(var(--color-accent),var(--color-accent)) 50% 50%/34% 100% no-repeat,linear-gradient(var(--color-accent),var(--color-accent)) 50% 50%/100% 34% no-repeat}
+.help{font-weight:500;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+main{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem;align-content:start;padding:1.5rem 0 3rem}
+.intro{min-width:0}
+h1{font-family:var(--font-display);font-style:normal;font-weight:700;font-size:clamp(2.9rem,12vw,6.75rem);line-height:.95;letter-spacing:-.03em;margin:0 0 1.25rem;overflow-wrap:anywhere;min-width:0}
+h1 .u{background:linear-gradient(transparent 64%,var(--color-accent) 64% 92%,transparent 92%)}
+.lead{font-size:1.125rem;max-width:30ch;color:var(--color-ink-soft);margin:0}
+.panel{min-width:0;max-width:26rem;width:100%}
+h2{font-family:var(--font-display);font-style:normal;font-weight:600;font-size:1.5rem;margin:0 0 1.5rem}
+.field{display:block;margin-bottom:1.5rem;position:relative}
+.field label{display:block;font-weight:600;font-size:.875rem;margin-bottom:.15rem}
+.field input{width:100%;font:inherit;font-size:1.125rem;color:inherit;background:transparent;border:0;border-bottom:2px solid var(--color-ink);border-radius:0;padding:.75rem 0;min-height:48px;transition:border-color .15s}
+.field input::placeholder{color:var(--color-ink-soft);opacity:.7}
+.field input:hover{border-bottom-color:var(--color-accent)}
+.field input:focus-visible{outline:3px solid var(--color-accent);outline-offset:4px;border-bottom-color:var(--color-accent)}
+.field input[aria-invalid="true"]{border-bottom-width:4px}
+.pw input{padding-right:5.5rem}
+.toggle{position:absolute;right:0;bottom:.25rem;min-height:44px;padding:0 .25rem;background:none;border:0;font:inherit;font-weight:600;color:inherit;text-decoration:underline;text-decoration-color:var(--color-accent);text-decoration-thickness:2px;text-underline-offset:4px;cursor:pointer;white-space:nowrap}
+.toggle:focus-visible,.link:focus-visible,.btn:focus-visible,.help:focus-visible,.brand:focus-visible{outline:3px solid var(--color-accent);outline-offset:3px}
+.err{display:none;margin:.5rem 0 0;font-weight:500;font-size:.9375rem}
+.err::before{content:"!";display:inline-grid;place-items:center;width:1.25rem;height:1.25rem;margin-right:.5rem;background:var(--color-accent);color:var(--color-on-accent);font-weight:700;font-size:.8rem}
+.field.bad .err{display:block}
+.row{display:flex;justify-content:flex-end;margin:-.5rem 0 1.5rem}
+.link{font-weight:500;white-space:nowrap;text-decoration-color:var(--color-accent);text-decoration-thickness:2px;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
+.btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:56px;font:inherit;font-weight:600;font-size:1.0625rem;white-space:nowrap;border:2px solid var(--color-ink);border-radius:0;cursor:pointer;transition:background .15s,color .15s,transform .1s}
+.btn.primary{background:var(--color-accent);color:var(--color-on-accent)}
+.btn.primary:hover{background:var(--color-ink);color:var(--color-paper)}
+.btn.ghost{background:transparent;color:var(--color-ink)}
+.btn.ghost:hover{background:var(--color-ink);color:var(--color-paper)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn[data-state="loading"]::before{content:"";width:1rem;height:1rem;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.or{display:flex;align-items:center;gap:1rem;margin:1.5rem 0;color:var(--color-ink-soft);font-size:.9375rem}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--color-line)}
+.foot{margin:2rem 0 0;font-size:.9375rem}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (min-width:880px){
+  main{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2rem,6vw,6rem);align-items:end;padding:3rem 0 4rem}
+  .cross{left:-7rem;right:auto;top:auto;bottom:-8rem;width:30rem}
+  .panel{justify-self:end;padding-bottom:.5rem}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="cross" aria-hidden="true"></div>
+  <header>
+    <a class="brand" href="#"><span class="mark" aria-hidden="true"></span>Rosa Farma</a>
+    <a class="help" href="#">Serve aiuto?</a>
+  </header>
+  <main>
+    <div class="intro">
+      <h1>Bentornato in <span class="u">farmacia</span>.</h1>
+      <p class="lead">Accedi per vedere le tue ricette, prenotare un ritiro e ricevere i promemoria.</p>
+    </div>
+    <section class="panel" aria-labelledby="t">
+      <h2 id="t">Accedi</h2>
+      <form id="f" novalidate>
+        <div class="field" id="fe">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nome@esempio.it" aria-describedby="ee">
+          <p class="err" id="ee" role="alert">Controlla l’email: sembra incompleta.</p>
+        </div>
+        <div class="field pw" id="fp">
+          <label for="pw">Password</label>
+          <input id="pw" name="password" type="password" autocomplete="current-password" aria-describedby="pe">
+          <button class="toggle" type="button" id="tg" aria-controls="pw">Mostra</button>
+          <p class="err" id="pe" role="alert">Inserisci la tua password.</p>
+        </div>
+        <div class="row"><a class="link" href="#">Password dimenticata?</a></div>
+        <button class="btn primary" id="go" type="submit">Accedi</button>
+      </form>
+      <div class="or"><span>oppure</span></div>
+      <button class="btn ghost" type="button">Continua con SPID</button>
+      <p class="foot">Non hai ancora un account? <a class="link" href="#">Registrati</a></p>
+    </section>
+  </main>
+</div>
+<script>
+(function(){
+  var f=document.getElementById('f'),em=document.getElementById('email'),pw=document.getElementById('pw'),
+      fe=document.getElementById('fe'),fp=document.getElementById('fp'),go=document.getElementById('go'),tg=document.getElementById('tg');
+  function flag(box,input,bad){box.classList.toggle('bad',bad);input.setAttribute('aria-invalid',bad?'true':'false')}
+  tg.addEventListener('click',function(){
+    var show=pw.type==='password';pw.type=show?'text':'password';
+    tg.textContent=show?'Nascondi':'Mostra';
+  });
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var badE=!/^\S+@\S+\.\S+$/.test(em.value.trim()),badP=pw.value.length===0;
+    flag(fe,em,badE);flag(fp,pw,badP);
+    if(badE){em.focus();return}
+    if(badP){pw.focus();return}
+    go.disabled=true;go.dataset.state='loading';go.textContent='Accesso in corso…';
+    setTimeout(function(){go.dataset.state='success';go.textContent='Accesso eseguito';go.disabled=false},1400);
+  });
+})();
+</script>
+</body>
+</html>
