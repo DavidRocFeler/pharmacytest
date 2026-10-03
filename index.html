@@ -3,22 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Accedi · Rosa Farma</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Oltrebanco · Configura la tua farmacia</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
 <style>
-/* Hallmark · macrostructure: Workbench-lite (left-biased type + bare form, no card) · custom tuned theme
- * theme: Rosa · paper cream · ink near-black · accent magenta ~8% · enrichment: Tier A CSS cross
- * nav: edge-aligned minimal · footer: none (single screen)
+/* Hallmark · macrostructure: Stepper-led split (numeral poster + single white card) · custom tuned theme "Verde Banco"
+ * theme: cream paper · ink · green primary ~15% · lime highlight · magenta ~1% (one marker) · enrichment: typographic numeral
+ * nav: edge-aligned minimal · footer: none · differs from last build: layout (centred-left type vs split), accent hue (magenta→green)
  * pre-emit critique: P4 H5 E4 S4 R5 V4
  */
 :root{
   --color-paper:#F7F6F1;
+  --color-card:#FFFFFF;
   --color-ink:#0A0A0A;
-  --color-accent:#FF1A8C;
-  --color-on-accent:#0A0A0A;
-  --color-line:color-mix(in srgb,var(--color-ink) 22%,transparent);
-  --color-ink-soft:color-mix(in srgb,var(--color-ink) 68%,var(--color-paper));
+  --color-green:#2FB544;
+  --color-lime:#6ED658;
+  --color-magenta:#FF1A8C;
+  --color-ink-soft:color-mix(in srgb,var(--color-ink) 66%,var(--color-paper));
+  --color-line:color-mix(in srgb,var(--color-ink) 16%,transparent);
+  --color-track:color-mix(in srgb,var(--color-ink) 14%,transparent);
   --font-display:"Clash Display","Archivo",system-ui,sans-serif;
   --font-body:"Satoshi","Plus Jakarta Sans",system-ui,sans-serif;
   --gutter:clamp(1.25rem,5vw,3.5rem);
@@ -27,117 +29,177 @@
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--color-paper:#0A0A0A;--color-ink:#F7F6F1}
+  :root:not([data-theme="light"]){--color-paper:#0A0A0A;--color-card:#161616;--color-ink:#F7F6F1}
 }
-:root[data-theme="dark"]{--color-paper:#0A0A0A;--color-ink:#F7F6F1}
+:root[data-theme="dark"]{--color-paper:#0A0A0A;--color-card:#161616;--color-ink:#F7F6F1}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-html,body{height:100%;overflow-x:clip;margin:0}
+html,body{margin:0;overflow-x:clip}
 *,*::before,*::after{box-sizing:border-box}
-body{background:var(--color-paper);color:var(--color-ink);font-family:var(--font-body);font-size:1rem;line-height:1.5;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-.page{position:relative;overflow:clip;min-height:100%;display:grid;grid-template-rows:auto 1fr;padding:0 var(--gutter)}
-.cross{position:absolute;z-index:0;pointer-events:none;aspect-ratio:1;width:clamp(9rem,40vw,26rem);right:-14%;top:3.5rem;
-  background:linear-gradient(var(--color-accent),var(--color-accent)) 50% 50%/34% 100% no-repeat,
-             linear-gradient(var(--color-accent),var(--color-accent)) 50% 50%/100% 34% no-repeat}
-header,main{position:relative;z-index:1}
-header{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0}
-.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--font-display);font-weight:700;font-size:1.25rem;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
-.mark{width:1.2rem;aspect-ratio:1;background:linear-gradient(var(--color-accent),var(--color-accent)) 50% 50%/34% 100% no-repeat,linear-gradient(var(--color-accent),var(--color-accent)) 50% 50%/100% 34% no-repeat}
-.help{font-weight:500;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
-main{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem;align-content:start;padding:1.5rem 0 3rem}
-.intro{min-width:0}
-h1{font-family:var(--font-display);font-style:normal;font-weight:700;font-size:clamp(2.9rem,12vw,6.75rem);line-height:.95;letter-spacing:-.03em;margin:0 0 1.25rem;overflow-wrap:anywhere;min-width:0}
-h1 .u{background:linear-gradient(transparent 64%,var(--color-accent) 64% 92%,transparent 92%)}
-.lead{font-size:1.125rem;max-width:30ch;color:var(--color-ink-soft);margin:0}
-.panel{min-width:0;max-width:26rem;width:100%}
-h2{font-family:var(--font-display);font-style:normal;font-weight:600;font-size:1.5rem;margin:0 0 1.5rem}
-.field{display:block;margin-bottom:1.5rem;position:relative}
-.field label{display:block;font-weight:600;font-size:.875rem;margin-bottom:.15rem}
-.field input{width:100%;font:inherit;font-size:1.125rem;color:inherit;background:transparent;border:0;border-bottom:2px solid var(--color-ink);border-radius:0;padding:.75rem 0;min-height:48px;transition:border-color .15s}
-.field input::placeholder{color:var(--color-ink-soft);opacity:.7}
-.field input:hover{border-bottom-color:var(--color-accent)}
-.field input:focus-visible{outline:3px solid var(--color-accent);outline-offset:4px;border-bottom-color:var(--color-accent)}
-.field input[aria-invalid="true"]{border-bottom-width:4px}
-.pw input{padding-right:5.5rem}
-.toggle{position:absolute;right:0;bottom:.25rem;min-height:44px;padding:0 .25rem;background:none;border:0;font:inherit;font-weight:600;color:inherit;text-decoration:underline;text-decoration-color:var(--color-accent);text-decoration-thickness:2px;text-underline-offset:4px;cursor:pointer;white-space:nowrap}
-.toggle:focus-visible,.link:focus-visible,.btn:focus-visible,.help:focus-visible,.brand:focus-visible{outline:3px solid var(--color-accent);outline-offset:3px}
-.err{display:none;margin:.5rem 0 0;font-weight:500;font-size:.9375rem}
-.err::before{content:"!";display:inline-grid;place-items:center;width:1.25rem;height:1.25rem;margin-right:.5rem;background:var(--color-accent);color:var(--color-on-accent);font-weight:700;font-size:.8rem}
+body{background:var(--color-paper);color:var(--color-ink);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:76rem;margin:0 auto;padding:0 var(--gutter)}
+header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 0 1.5rem}
+.brand{font-family:var(--font-display);font-weight:700;font-size:1.375rem;letter-spacing:-.02em;white-space:nowrap}
+.brand b{background:var(--color-green);color:#0A0A0A;padding:0 .3em;margin-right:.1em}
+.save{font-weight:500;font-size:.9375rem;color:var(--color-ink-soft);white-space:nowrap}
+
+/* progress */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem}
+.step{position:relative;padding-top:1rem;min-width:0}
+.step::after{content:"";position:absolute;left:0;right:0;top:.5rem;height:4px;background:var(--color-track)}
+.step[aria-current="step"]::after{background:var(--color-green)}
+.step[aria-current="step"]::before{content:"";position:absolute;left:0;top:0;width:.5rem;height:.5rem;background:var(--color-magenta);z-index:1}
+.step .n{display:block;font-family:var(--font-display);font-weight:600;font-size:.8125rem;color:var(--color-ink-soft)}
+.step .l{display:none;font-weight:500;font-size:.9375rem;color:var(--color-ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.step[aria-current="step"] .n,.step[aria-current="step"] .l{color:var(--color-ink);font-weight:700}
+.now{margin:.75rem 0 0;font-weight:600}
+@media (min-width:700px){.step .l{display:block}.now{display:none}}
+
+/* layout */
+main{display:grid;grid-template-columns:minmax(0,1fr);gap:2rem;padding:2.5rem 0 4rem}
+.num{font-family:var(--font-display);font-weight:700;font-size:clamp(5rem,22vw,13rem);line-height:.8;letter-spacing:-.05em;color:var(--color-lime);margin:0 0 1rem;user-select:none}
+h1{font-family:var(--font-display);font-style:normal;font-weight:700;font-size:clamp(2.25rem,8vw,4rem);line-height:1;letter-spacing:-.025em;margin:0 0 1rem;overflow-wrap:anywhere;min-width:0}
+h1 .hl{background:linear-gradient(transparent 58%,var(--color-lime) 58% 90%,transparent 90%)}
+.lead{font-size:1.125rem;max-width:34ch;color:var(--color-ink-soft);margin:0}
+@media (min-width:900px){
+  main{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,6vw,6rem);align-items:start;padding-top:3.5rem}
+}
+
+/* card */
+.card{background:var(--color-card);border:1px solid var(--color-line);padding:clamp(1.25rem,4vw,2.5rem);min-width:0}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:1.5rem}
+@media (min-width:640px){.grid.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.field{min-width:0}
+.field>label,.legend{display:block;font-weight:600;font-size:.9375rem;margin-bottom:.4rem;padding:0}
+.hint{font-weight:400;color:var(--color-ink-soft);font-size:.875rem;margin:.35rem 0 0}
+input[type=text],input[type=time]{width:100%;min-width:0;font:inherit;font-size:1.0625rem;color:inherit;background:var(--color-paper);border:1.5px solid var(--color-ink);border-radius:0;padding:.7rem .85rem;min-height:48px;transition:background .15s,border-color .15s}
+input::placeholder{color:var(--color-ink-soft);opacity:.75}
+input:hover:not(:disabled){border-color:var(--color-green)}
+input:focus-visible,.btn:focus-visible,.closed input:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px;box-shadow:0 0 0 6px var(--color-lime)}
+input:disabled{opacity:.45;cursor:not-allowed}
+.field.bad input{border-width:3px}
+.err{display:none;margin:.45rem 0 0;font-size:.9375rem;font-weight:500}
+.err::before{content:"!";display:inline-grid;place-items:center;width:1.2rem;height:1.2rem;margin-right:.5rem;background:var(--color-ink);color:var(--color-paper);font-size:.75rem;font-weight:700}
 .field.bad .err{display:block}
-.row{display:flex;justify-content:flex-end;margin:-.5rem 0 1.5rem}
-.link{font-weight:500;white-space:nowrap;text-decoration-color:var(--color-accent);text-decoration-thickness:2px;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
-.btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:56px;font:inherit;font-weight:600;font-size:1.0625rem;white-space:nowrap;border:2px solid var(--color-ink);border-radius:0;cursor:pointer;transition:background .15s,color .15s,transform .1s}
-.btn.primary{background:var(--color-accent);color:var(--color-on-accent)}
-.btn.primary:hover{background:var(--color-ink);color:var(--color-paper)}
-.btn.ghost{background:transparent;color:var(--color-ink)}
-.btn.ghost:hover{background:var(--color-ink);color:var(--color-paper)}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.hours{border-top:1px solid var(--color-line)}
+.day{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem .75rem;align-items:center;padding:.9rem 0;border-bottom:1px solid var(--color-line)}
+.day .d{font-weight:600}
+.closed{display:flex;align-items:center;justify-content:flex-end;gap:.5rem;min-height:44px;font-size:.9375rem;cursor:pointer;white-space:nowrap}
+.closed input{width:1.25rem;height:1.25rem;accent-color:var(--color-green);margin:0}
+.day .t{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:.5rem;align-items:center}
+@media (min-width:640px){
+  .day{grid-template-columns:7rem minmax(0,1fr) auto}
+  .day .t{grid-column:2;order:2}
+  .day .closed{order:3}
+}
+.actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:.75rem;margin-top:2rem}
+.btn{display:flex;align-items:center;justify-content:center;gap:.6rem;min-height:56px;font:inherit;font-weight:700;font-size:1.0625rem;white-space:nowrap;border:2px solid var(--color-ink);border-radius:0;cursor:pointer;transition:background .15s,color .15s,transform .1s}
+.btn.primary{background:var(--color-green);color:#0A0A0A}
+.btn.primary:hover:not(:disabled){background:var(--color-ink);color:var(--color-paper)}
+.btn.primary .ar{transition:transform .15s}
+.btn.primary:hover .ar{transform:translateX(3px)}
+.btn.sec{background:transparent;color:var(--color-ink)}
+.btn.sec:hover{background:var(--color-lime);color:#0A0A0A}
 .btn:active{transform:translateY(1px)}
-.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn:disabled{opacity:.6;cursor:not-allowed}
 .btn[data-state="loading"]::before{content:"";width:1rem;height:1rem;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(1turn)}}
-.or{display:flex;align-items:center;gap:1rem;margin:1.5rem 0;color:var(--color-ink-soft);font-size:.9375rem}
-.or::before,.or::after{content:"";flex:1;height:1px;background:var(--color-line)}
-.foot{margin:2rem 0 0;font-size:.9375rem}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-@media (min-width:880px){
-  main{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2rem,6vw,6rem);align-items:end;padding:3rem 0 4rem}
-  .cross{left:-7rem;right:auto;top:auto;bottom:-8rem;width:30rem}
-  .panel{justify-self:end;padding-bottom:.5rem}
-}
 </style>
 </head>
 <body>
-<div class="page">
-  <div class="cross" aria-hidden="true"></div>
+<div class="wrap">
   <header>
-    <a class="brand" href="#"><span class="mark" aria-hidden="true"></span>Rosa Farma</a>
-    <a class="help" href="#">Serve aiuto?</a>
+    <span class="brand"><b>Oltre</b>banco</span>
+    <span class="save">Configurazione</span>
   </header>
+  <nav aria-label="Avanzamento">
+    <ol class="steps">
+      <li class="step" aria-current="step"><span class="n">01</span><span class="l">Farmacia</span></li>
+      <li class="step"><span class="n">02</span><span class="l">Servizi</span></li>
+      <li class="step"><span class="n">03</span><span class="l">Squadra</span></li>
+      <li class="step"><span class="n">04</span><span class="l">Canali</span></li>
+      <li class="step"><span class="n">05</span><span class="l">Sistema</span></li>
+      <li class="step"><span class="n">06</span><span class="l">Legale</span></li>
+    </ol>
+    <p class="now">Passo 1 di 6 · Farmacia</p>
+  </nav>
+
   <main>
-    <div class="intro">
-      <h1>Bentornato in <span class="u">farmacia</span>.</h1>
-      <p class="lead">Accedi per vedere le tue ricette, prenotare un ritiro e ricevere i promemoria.</p>
+    <div>
+      <p class="num" aria-hidden="true">01</p>
+      <h1>Partiamo dalla tua <span class="hl">farmacia</span>.</h1>
+      <p class="lead">Quattro dati per creare il profilo su Oltrebanco. Potrai modificarli in seguito.</p>
     </div>
-    <section class="panel" aria-labelledby="t">
-      <h2 id="t">Accedi</h2>
-      <form id="f" novalidate>
-        <div class="field" id="fe">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nome@esempio.it" aria-describedby="ee">
-          <p class="err" id="ee" role="alert">Controlla l’email: sembra incompleta.</p>
+
+    <form class="card" id="f" novalidate>
+      <div class="grid">
+        <div class="field" id="f-nome">
+          <label for="nome">Nome della farmacia</label>
+          <input id="nome" type="text" autocomplete="organization" aria-describedby="e-nome">
+          <p class="err" id="e-nome" role="alert">Inserisci il nome della farmacia.</p>
         </div>
-        <div class="field pw" id="fp">
-          <label for="pw">Password</label>
-          <input id="pw" name="password" type="password" autocomplete="current-password" aria-describedby="pe">
-          <button class="toggle" type="button" id="tg" aria-controls="pw">Mostra</button>
-          <p class="err" id="pe" role="alert">Inserisci la tua password.</p>
+        <div class="field" id="f-iva">
+          <label for="iva">Partita IVA</label>
+          <input id="iva" type="text" inputmode="numeric" maxlength="11" autocomplete="off" placeholder="00000000000" aria-describedby="h-iva e-iva">
+          <p class="hint" id="h-iva">11 cifre, senza spazi.</p>
+          <p class="err" id="e-iva" role="alert">La Partita IVA deve avere 11 cifre.</p>
         </div>
-        <div class="row"><a class="link" href="#">Password dimenticata?</a></div>
-        <button class="btn primary" id="go" type="submit">Accedi</button>
-      </form>
-      <div class="or"><span>oppure</span></div>
-      <button class="btn ghost" type="button">Continua con SPID</button>
-      <p class="foot">Non hai ancora un account? <a class="link" href="#">Registrati</a></p>
-    </section>
+        <div class="field" id="f-ind">
+          <label for="ind">Indirizzo</label>
+          <input id="ind" type="text" autocomplete="street-address" placeholder="Via, numero civico, CAP, città" aria-describedby="e-ind">
+          <p class="err" id="e-ind" role="alert">Inserisci l’indirizzo completo.</p>
+        </div>
+
+        <fieldset>
+          <legend class="legend">Orari di apertura</legend>
+          <div class="hours">
+            <div class="day">
+              <span class="d">Lun – Ven</span>
+              <label class="closed"><input type="checkbox" aria-label="Chiuso lun–ven"> Chiuso</label>
+              <div class="t"><input type="time" value="08:30" aria-label="Apertura lun–ven"><span aria-hidden="true">–</span><input type="time" value="19:30" aria-label="Chiusura lun–ven"></div>
+            </div>
+            <div class="day">
+              <span class="d">Sabato</span>
+              <label class="closed"><input type="checkbox" aria-label="Chiuso sabato"> Chiuso</label>
+              <div class="t"><input type="time" value="09:00" aria-label="Apertura sabato"><span aria-hidden="true">–</span><input type="time" value="13:00" aria-label="Chiusura sabato"></div>
+            </div>
+            <div class="day">
+              <span class="d">Domenica</span>
+              <label class="closed"><input type="checkbox" checked aria-label="Chiuso domenica"> Chiuso</label>
+              <div class="t"><input type="time" value="09:00" aria-label="Apertura domenica" disabled><span aria-hidden="true">–</span><input type="time" value="13:00" aria-label="Chiusura domenica" disabled></div>
+            </div>
+          </div>
+          <p class="hint">Orari predefiniti: modificali come preferisci.</p>
+        </fieldset>
+      </div>
+
+      <div class="actions">
+        <button class="btn sec" type="button">Indietro</button>
+        <button class="btn primary" id="go" type="submit"><span id="gol">Avanti</span> <span class="ar" aria-hidden="true">→</span></button>
+      </div>
+    </form>
   </main>
 </div>
 <script>
 (function(){
-  var f=document.getElementById('f'),em=document.getElementById('email'),pw=document.getElementById('pw'),
-      fe=document.getElementById('fe'),fp=document.getElementById('fp'),go=document.getElementById('go'),tg=document.getElementById('tg');
-  function flag(box,input,bad){box.classList.toggle('bad',bad);input.setAttribute('aria-invalid',bad?'true':'false')}
-  tg.addEventListener('click',function(){
-    var show=pw.type==='password';pw.type=show?'text':'password';
-    tg.textContent=show?'Nascondi':'Mostra';
+  var f=document.getElementById('f'),go=document.getElementById('go'),gol=document.getElementById('gol');
+  function chk(id,ok){var b=document.getElementById('f-'+id);b.classList.toggle('bad',!ok);
+    b.querySelector('input').setAttribute('aria-invalid',ok?'false':'true');return ok}
+  document.querySelectorAll('.closed input').forEach(function(c){
+    c.addEventListener('change',function(){
+      c.closest('.day').querySelectorAll('.t input').forEach(function(t){t.disabled=c.checked});
+    });
   });
+  document.getElementById('iva').addEventListener('input',function(e){e.target.value=e.target.value.replace(/\D/g,'')});
   f.addEventListener('submit',function(e){
     e.preventDefault();
-    var badE=!/^\S+@\S+\.\S+$/.test(em.value.trim()),badP=pw.value.length===0;
-    flag(fe,em,badE);flag(fp,pw,badP);
-    if(badE){em.focus();return}
-    if(badP){pw.focus();return}
-    go.disabled=true;go.dataset.state='loading';go.textContent='Accesso in corso…';
-    setTimeout(function(){go.dataset.state='success';go.textContent='Accesso eseguito';go.disabled=false},1400);
+    var v=function(id){return document.getElementById(id).value.trim()};
+    var r=[['nome',v('nome').length>1],['iva',/^\d{11}$/.test(v('iva'))],['ind',v('ind').length>5]];
+    var bad=r.filter(function(x){return !chk(x[0],x[1])});
+    if(bad.length){document.getElementById(bad[0][0]).focus();return}
+    go.disabled=true;go.dataset.state='loading';gol.textContent='Salvataggio…';
+    setTimeout(function(){go.dataset.state='';go.disabled=false;gol.textContent='Salvato ✓'},1400);
   });
 })();
 </script>
